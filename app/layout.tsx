@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Progress } from "@/components/ui/progress";
 import AuthSwitch from "@/components/ui/auth-toggle";
 import { ModeToggle } from "@/components/ui/mode-toggle";
+import ProgressBar from "@/components/ui/Progressbar";
 
 export const metadata: Metadata = {
   title: "Golang - 100 Days",
@@ -35,12 +35,7 @@ export default function RootLayout({
               </div>
             </nav>
             <div className="py-5 my-5 max-w-screen-lg mx-auto">
-              <Progress value={50} />
-              <div className="float-end mx-1">
-                <p className="text-sm font-semibold antialiased px-1">
-                  10% Completed
-                </p>
-              </div>
+              <ProgressBar />
               {children}
             </div>
           </div>
