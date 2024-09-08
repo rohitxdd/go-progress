@@ -1,3 +1,12 @@
+import ProgressDetail from "@/components/ui/progress-detail";
+import { Suspense } from "react";
+
 export default function Page({ params }: { params: { slug: string } }) {
-  return <h1>My Page {params.slug}</h1>;
+  return (
+    <>
+      <Suspense>
+        <ProgressDetail slug={params.slug} />
+      </Suspense>
+    </>
+  );
 }

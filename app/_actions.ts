@@ -4,7 +4,7 @@ import { EntryFormSchema } from "@/lib/validationSchema";
 import "@/envConfig";
 import { db } from "@/data/db";
 import { progressEntries } from "@/data/schema";
-import { count } from "drizzle-orm";
+import { count, eq } from "drizzle-orm";
 import { ProgressType } from "@/lib/types";
 
 export async function CreateProgress(state: unknown, formdata: FormData) {
@@ -62,4 +62,20 @@ export async function fetchAllProgress(): Promise<ProgressType[]> {
     }
   }
   return [];
+}
+
+export async function fetchProgressDetailsById(
+  id: string
+): Promise<ProgressType | null> {
+  try {
+    const row = await db.query.progressEntries.findFirst({
+      where: eq(progressEntries.id, id),
+    });
+    if (row) {
+      return row as ProgressType;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return null;
 }
