@@ -1,5 +1,7 @@
 import { signOut } from "@/auth";
 import { Button } from "./ui/button";
+import { CiLogout } from "react-icons/ci";
+
 
 export function SignOut() {
   return (
@@ -10,7 +12,7 @@ export function SignOut() {
       }}
     >
       <Button type="submit" variant="outline">
-        Sign Out
+        <CiLogout/>
       </Button>
     </form>
   );
