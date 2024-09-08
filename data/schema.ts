@@ -89,9 +89,9 @@ export const progressEntries = pgTable("progressEntry", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  day: text("day").notNull().unique(),
+  day: integer("day").notNull().unique(),
   description: text("desc").notNull(),
   overview: text("overview").notNull(),
   content: text("content").notNull(),
-  created_at: timestamp("created_at", { mode: "date" }).notNull(),
+  created_at: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });

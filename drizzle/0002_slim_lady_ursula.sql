@@ -1,0 +1,1 @@
+ALTER TABLE "progressEntry" ALTER COLUMN "day" SET DATA TYPE integer;
