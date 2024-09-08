@@ -7,7 +7,7 @@ import { progressEntries } from "@/data/schema";
 import { count } from "drizzle-orm";
 import { ProgressType } from "@/lib/types";
 
-export async function CreateProgress(state: any, formdata: FormData) {
+export async function CreateProgress(state: unknown, formdata: FormData) {
   const session = await auth();
   if (session?.user?.email === process.env.ADMIN_MAIL) {
     const result = EntryFormSchema.safeParse({
@@ -24,10 +24,10 @@ export async function CreateProgress(state: any, formdata: FormData) {
         overview: result.data.overview,
         content: result.data.content,
       });
-      console.log("done");
       return { data: result.data };
     } else {
-      return { error: result.error.format() };
+      console.error(result.error.format());
+      return { error: "Something went wrong" };
     }
   } else {
     return { error: "not authorized or authenticated" };
@@ -50,16 +50,16 @@ export async function progressCount(): Promise<number> {
   return 0;
 }
 
-export async function fetchAllProgress():Promise<ProgressType[]> {
-  try{
-    const rows = await db.query.progressEntries.findMany()
-    return rows as ProgressType[]
-  }catch(e){
+export async function fetchAllProgress(): Promise<ProgressType[]> {
+  try {
+    const rows = await db.query.progressEntries.findMany();
+    return rows as ProgressType[];
+  } catch (e) {
     if (e instanceof Error) {
       console.error(e.message);
     } else {
       console.log(e);
     }
   }
-  return []
+  return [];
 }

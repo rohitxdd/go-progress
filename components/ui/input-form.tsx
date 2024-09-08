@@ -6,9 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useFormState } from "react-dom";
 
-export default async function InputForm() {
+export default function InputForm() {
   const [state, formAction] = useFormState(CreateProgress, null);
-
   console.log(state);
   return (
     <div className="max-w-screen-sm mt-10 mx-auto">
