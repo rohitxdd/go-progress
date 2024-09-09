@@ -19,7 +19,7 @@ export default async function ProgressDetail({ slug }: { slug: string }) {
         <CardTitle className="text-xl font-se">Day {data.day}</CardTitle>
         <CardDescription>{data.description}</CardDescription>
       </CardHeader>
-      <CardContent className="prose whitespace-pre-wrap">
+      <CardContent className="prose whitespace-pre-wrap max-w-full">
         <Markdown className="dark:text-white dark:prose-a:text-blue-300 dark:prose-headings:text-blue-400 prose-headings:my-2 text-sm">
           {data.content}
         </Markdown>
