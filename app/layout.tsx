@@ -6,6 +6,8 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import ProgressBar from "@/components/ui/Progressbar";
 import Link from "next/link";
 import { Toaster } from "@/components/ui/toaster";
+import { Suspense } from "react";
+import ProgressBarSkeleton from "@/components/ui/progress-bar-skeleton";
 
 export const metadata: Metadata = {
   title: "Golang - 100 Days",
@@ -37,7 +39,9 @@ export default function RootLayout({
               </div>
             </nav>
             <div className="py-5 my-5 max-w-screen-lg mx-auto">
-              <ProgressBar />
+              <Suspense fallback={<ProgressBarSkeleton />}>
+                <ProgressBar />
+              </Suspense>
               {children}
             </div>
           </div>
