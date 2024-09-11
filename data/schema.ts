@@ -95,3 +95,17 @@ export const progressEntries = pgTable("progressEntry", {
   content: text("content").notNull(),
   created_at: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
 });
+
+export const comments = pgTable("comments", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  user_id: text("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  progress_entry_id: text("progress_entry_id")
+    .notNull()
+    .references(() => progressEntries.id, { onDelete: "cascade" }),
+  comment: text("comment").notNull(),
+  created_at: timestamp("created_at", { mode: "date" }).defaultNow().notNull(),
+});
