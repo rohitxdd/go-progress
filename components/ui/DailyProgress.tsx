@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "./card";
@@ -25,14 +26,19 @@ export default function DailyProgress({
             onClick={() => router.push(`/progress/${row.id}`)}
           >
             <CardHeader>
-              <CardTitle className="text-xl font-se">Day {row.day}</CardTitle>
+              <CardTitle className="text-xl font-semibold">
+                Day {row.day}
+              </CardTitle>
               <CardDescription>{row.description}</CardDescription>
             </CardHeader>
-            <CardContent className="prose max-h-64 truncate whitespace-pre-wrap">
-              <Markdown className="dark:text-white dark:prose-a:text-blue-300 dark:prose-headings:text-blue-400 prose-headings:my-2 text-sm">
+            <CardContent className="prose max-h-64 min-h-64 truncate whitespace-pre-wrap">
+              <Markdown className="dark:text-white dark:prose-a:text-blue-300 dark:prose-headings:text-white prose-headings:my-2 text-sm">
                 {row.overview}
               </Markdown>
             </CardContent>
+            <CardFooter className="float-end" suppressHydrationWarning>
+              {new Intl.DateTimeFormat("en-IN").format(row.created_at)}
+            </CardFooter>
           </Card>
         ))}
       </div>
