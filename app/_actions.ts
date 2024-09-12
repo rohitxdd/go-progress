@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { EntryFormSchema } from "@/lib/validationSchema";
 import "@/envConfig";
 import { db } from "@/data/db";
-import { progressEntries } from "@/data/schema";
+import { comments, progressEntries, users } from "@/data/schema";
 import { count, eq } from "drizzle-orm";
 import { ProgressType } from "@/lib/types";
 
@@ -78,4 +78,21 @@ export async function fetchProgressDetailsById(
     console.error(e);
   }
   return null;
+}
+
+export async function FetchComments(id: string) {
+  try {
+    return db
+      .select({
+        id: comments.id,
+        comment: comments.comment,
+        date: comments.created_at,
+        name: users.name,
+      })
+      .from(comments)
+      .innerJoin(users, eq(users.id, comments.user_id))
+      .where(eq(comments.progress_entry_id, id));
+  } catch (e) {
+    console.error(e);
+  }
 }
