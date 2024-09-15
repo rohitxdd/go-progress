@@ -4,8 +4,9 @@ import { EntryFormSchema } from "@/lib/validationSchema";
 import "@/envConfig";
 import { db } from "@/data/db";
 import { comments, progressEntries, users } from "@/data/schema";
-import { count, eq } from "drizzle-orm";
+import { and, count, eq } from "drizzle-orm";
 import { ProgressType } from "@/lib/types";
+import { revalidatePath } from "next/cache";
 
 export async function CreateProgress(state: unknown, formdata: FormData) {
   const session = await auth();
@@ -94,5 +95,43 @@ export async function FetchComments(id: string) {
       .where(eq(comments.progress_entry_id, id));
   } catch (e) {
     console.error(e);
+  }
+}
+
+export async function CreateComment(comment: string, id: string) {
+  const session = await auth();
+  if (session?.user?.id != null) {
+    const userid = session.user.id;
+    const rowCount = await db
+      .select({ count: count() })
+      .from(comments)
+      .where(
+        and(eq(comments.user_id, userid), eq(comments.progress_entry_id, id))
+      );
+
+    if (rowCount.length > 0) {
+      const count = rowCount[0].count;
+      if (count >= 3) {
+        return { error: "Only 3 comments per account is allowed." };
+      }
+    }
+
+    try {
+      await db.insert(comments).values({
+        user_id: userid,
+        comment: comment,
+        progress_entry_id: id,
+      });
+      revalidatePath(`/progress/${id}`, "page");
+      return null;
+    } catch (e) {
+      if (e instanceof Error) {
+        return { error: e.message };
+      } else {
+        return { error: "Some error occured while processing your request" };
+      }
+    }
+  } else {
+    return { error: "not authorized or authenticated" };
   }
 }
