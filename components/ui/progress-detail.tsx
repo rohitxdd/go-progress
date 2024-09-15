@@ -8,6 +8,7 @@ import {
 } from "./card";
 import Markdown from "react-markdown";
 import { auth } from "@/auth";
+import CommentSection from "../comments/comment-section";
 
 export default async function ProgressDetail({ slug }: { slug: string }) {
   const data = await fetchProgressDetailsById(slug);
@@ -31,9 +32,11 @@ export default async function ProgressDetail({ slug }: { slug: string }) {
         </CardContent>
       </Card>
       {session ? (
-        <div>Show Comments</div>
+        <CommentSection id={slug} />
       ) : (
-        <div>Signin to see the comments</div>
+        <div className="py-3">
+          <p className="text-sm font-semibold antialiased">Signin to see the comments</p>
+        </div>
       )}
     </>
   );
