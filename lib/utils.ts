@@ -7,6 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function FormatDate(tstamp: Date) {
   return new Intl.DateTimeFormat("en-IN", {
+    timeZone: "Asia/Kolkata",
     dateStyle: "short",
     timeStyle: "short",
   }).format(tstamp);
