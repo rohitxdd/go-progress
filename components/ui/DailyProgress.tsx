@@ -10,6 +10,7 @@ import {
 import Markdown from "react-markdown";
 import { ProgressType } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { FormatDate } from "@/lib/utils";
 export default function DailyProgress({
   progressRows,
 }: {
@@ -37,7 +38,7 @@ export default function DailyProgress({
               </Markdown>
             </CardContent>
             <CardFooter className="float-end" suppressHydrationWarning>
-              {new Intl.DateTimeFormat("en-IN").format(row.created_at)}
+              {FormatDate(row.created_at)}
             </CardFooter>
           </Card>
         ))}

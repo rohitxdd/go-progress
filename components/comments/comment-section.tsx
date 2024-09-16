@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { FaUser } from "react-icons/fa";
+import { FormatDate } from "@/lib/utils";
 
 export default async function CommentSection({ id }: { id: string }) {
   const comments = await FetchComments(id);
@@ -29,7 +30,7 @@ export default async function CommentSection({ id }: { id: string }) {
                         {comment.name}
                       </p>
                       <p className="font-thin text-xs antialiased">
-                        {comment.date.toLocaleString()}
+                        {FormatDate(comment.date)}
                       </p>
                     </div>
                   </div>
