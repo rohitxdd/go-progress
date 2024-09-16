@@ -9,22 +9,22 @@ import {
 } from "./card";
 import Markdown from "react-markdown";
 import { ProgressType } from "@/lib/types";
-import { useRouter } from "next/navigation";
 import { FormatDate } from "@/lib/utils";
+import { Button } from "./button";
+import { FaArrowRight } from "react-icons/fa";
+import Link from "next/link";
 export default function DailyProgress({
   progressRows,
 }: {
   progressRows: ProgressType[];
 }) {
-  const router = useRouter();
   return (
     <>
       <div className="mt-10 container m-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {progressRows.map((row) => (
           <Card
-            className="cursor-pointer border-2 shadow-sm hover:shadow-2xl transition-all ease-in-out duration-200 dark:hover:scale-100"
+            className="border-2 shadow-sm hover:shadow-2xl transition-all ease-in-out duration-200 dark:hover:scale-100"
             key={row.id}
-            onClick={() => router.push(`/progress/${row.id}`)}
           >
             <CardHeader>
               <CardTitle className="text-xl font-semibold">
@@ -37,8 +37,13 @@ export default function DailyProgress({
                 {row.overview}
               </Markdown>
             </CardContent>
-            <CardFooter className="float-end" suppressHydrationWarning>
+            <CardFooter className="flex justify-between">
               {FormatDate(row.created_at)}
+              <Link href={`/progress/${row.id}`}>
+                <Button variant="outline">
+                  <FaArrowRight />
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
         ))}
