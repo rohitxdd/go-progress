@@ -34,7 +34,7 @@ export default async function CommentSection({ id }: { id: string }) {
                       </p>
                     </div>
                   </div>
-                  <div className="font-mono ml-8 prose max-w-full">
+                  <div className="ml-8 prose max-w-full">
                     <pre>
                       <code>{comment.comment}</code>
                     </pre>

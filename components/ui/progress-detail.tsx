@@ -1,4 +1,4 @@
-import { fetchProgressDetailsById } from "@/app/_actions";
+import { CommentCount, fetchProgressDetailsById } from "@/app/_actions";
 import {
   Card,
   CardContent,
@@ -9,16 +9,23 @@ import {
 import Markdown from "react-markdown";
 import { auth } from "@/auth";
 import CommentSection from "../comments/comment-section";
+import AuthSwitch from "./auth-toggle";
+import Link from "next/link";
 
 export default async function ProgressDetail({ slug }: { slug: string }) {
   const data = await fetchProgressDetailsById(slug);
+  const commentCount = await CommentCount(slug)
   const session = await auth();
   if (!data) {
     return <div className="text-xl font-semibold">No data Found.</div>;
   }
   return (
     <>
-      <Card className="border-2 shadow-sm mt-10">
+      <div className="mt-10 flex justify-end gap-3 px-2 underline underline-offset-2 text-sm">
+        <Link href="/">Home</Link>
+        <Link href="#comment-section">{commentCount} Comments</Link>
+      </div>
+      <Card className="border-2 shadow-sm mt-1">
         <CardHeader>
           <CardTitle className="text-xl font-semibold">
             Day {data.day}
@@ -31,13 +38,17 @@ export default async function ProgressDetail({ slug }: { slug: string }) {
           </Markdown>
         </CardContent>
       </Card>
-      {session ? (
-        <CommentSection id={slug} />
-      ) : (
-        <div className="py-3">
-          <p className="text-sm font-semibold antialiased">Signin to see the comments</p>
-        </div>
-      )}
+      <div id="comment-section">
+        {session ? (
+          <CommentSection id={slug} />
+        ) : (
+          <div className="py-3 px-1">
+            <div className="font-semibold antialiased flex items-center gap-2">
+              SignIn <AuthSwitch /> to see the comments
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }

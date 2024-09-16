@@ -135,3 +135,19 @@ export async function CreateComment(comment: string, id: string) {
     return { error: "not authorized or authenticated" };
   }
 }
+
+export async function CommentCount(id: string): Promise<number> {
+  try {
+    const rowCount = await db
+      .select({ count: count() })
+      .from(comments)
+      .where(eq(comments.progress_entry_id, id));
+
+    if (rowCount.length > 0) {
+      return rowCount[0].count;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+  return 0;
+}
