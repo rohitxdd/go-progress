@@ -33,7 +33,7 @@ export default async function ProgressDetail({ slug }: { slug: string }) {
           <CardDescription>{data.description}</CardDescription>
         </CardHeader>
         <CardContent className="prose whitespace-pre-wrap max-w-full">
-          <Markdown className="dark:text-white dark:prose-a:text-blue-300 dark:prose-headings:text-white prose-headings:my-2 prose-code:dark:text-slate-300 dark:prose-strong:text-white">
+          <Markdown className="dark:text-white dark:prose-invert prose-headings:my-2 flex flex-col justify-start">
             {data.content}
           </Markdown>
         </CardContent>

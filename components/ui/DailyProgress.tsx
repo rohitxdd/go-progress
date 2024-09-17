@@ -33,7 +33,7 @@ export default function DailyProgress({
               <CardDescription>{row.description}</CardDescription>
             </CardHeader>
             <CardContent className="prose max-h-64 min-h-64 truncate whitespace-pre-wrap">
-              <Markdown className="dark:text-white dark:prose-a:text-blue-300 prose-code:bg-gray-300 dark:prose-headings:text-white prose-headings:my-2 text-sm">
+              <Markdown className="dark:text-white dark:prose-invert prose-headings:my-2 text-sm flex flex-col justify-start">
                 {row.overview}
               </Markdown>
             </CardContent>
