@@ -4,7 +4,7 @@ import { EntryFormSchema } from "@/lib/validationSchema";
 import "@/envConfig";
 import { db } from "@/data/db";
 import { comments, progressEntries, users } from "@/data/schema";
-import { and, count, eq } from "drizzle-orm";
+import { and, asc, count, eq } from "drizzle-orm";
 import { ProgressType } from "@/lib/types";
 import { revalidatePath } from "next/cache";
 
@@ -53,7 +53,9 @@ export async function progressCount(): Promise<number> {
 
 export async function fetchAllProgress(): Promise<ProgressType[]> {
   try {
-    const rows = await db.query.progressEntries.findMany();
+    const rows = await db.query.progressEntries.findMany({
+      orderBy : [asc(progressEntries.day)]
+    });
     return rows as ProgressType[];
   } catch (e) {
     if (e instanceof Error) {
